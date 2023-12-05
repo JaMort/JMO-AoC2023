@@ -18,10 +18,17 @@ for i, line in enumerate(lines):
     for number in numbers_in_line:
         adjacent = ''
         index = line.index(str(number))
-        index_end = index + len(str(number))
-        print("line: " + str(i) + " number: " + str(number) + " index_start: " + str(index) + " index_end: " + str(index_end))
+        index_end = index + len(str(number)) + 3 if index == 0 else index + len(str(number))
         if index > 0:
             index = index-1
-        if index_end < len(line):
+        if index_end < len(line)-1:
             index_end = index_end+1
-        part_numbers.append(number)
+        if line_above != None:
+            adjacent += line_above[index: index_end]
+        if line_below != None:
+            adjacent += line_below[index: index_end]
+        adjacent += line[index: index_end]
+        if any(n != '.' for n in adjacent):
+            part_numbers.append(number)
+
+print(sum(part_numbers))
