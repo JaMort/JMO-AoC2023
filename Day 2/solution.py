@@ -40,3 +40,31 @@ for line in lines:
 possible_games = [key for key, value in games if value]
 print(sum(possible_games))
 
+# part 2 - find the power (numbers multiplied together) of each minimum set of cubes that must be present in the games
+
+games2 = []
+
+for line in lines:
+    line_substrings = line.split(':')
+    results = line_substrings[1].split(';')
+    min_red = 0
+    min_green = 0
+    min_blue = 0
+    for result in results:
+        values = result.split(',')
+        for value in values:
+            if value.__contains__('red'):
+                number = [int(s) for s in re.findall(r'\d+', value)][0]
+                if number > min_red:
+                    min_red = number
+            elif value.__contains__('green'):
+                number = [int(s) for s in re.findall(r'\d+', value)][0]
+                if number > min_green:
+                    min_green = number
+            elif value.__contains__('blue'):
+                number = [int(s) for s in re.findall(r'\d+', value)][0]
+                if number > min_blue:
+                    min_blue = number
+    games2.append(min_red * min_green * min_blue)
+
+print(sum(games2))
